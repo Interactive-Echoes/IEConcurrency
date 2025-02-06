@@ -1,0 +1,6 @@
+[submodule "Benchmark"]
+	path = ThirdParty/Benchmark
+	url = https://github.com/google/benchmark.git
+[submodule "ThirdParty/Boost"]
+	path = ThirdParty/Boost
+	url = https://github.com/boostorg/boost.git
