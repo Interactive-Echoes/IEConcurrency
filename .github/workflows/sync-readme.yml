@@ -1,0 +1,44 @@
+name: Sync README
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'README.md'
+
+jobs:
+  sync-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git user
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          
+      - name: Sync README to all branches
+        run: |
+          git fetch --all
+
+          for branch in $(git branch -r | grep -vE 'HEAD|main|master'); do
+              local_branch="${branch#origin/}"
+          
+              git checkout "$local_branch"
+              git pull origin "$local_branch"
+          
+              git checkout master -- README.md
+              git add --renormalize README.md 
+          
+              if git diff --cached --quiet; then
+                  echo "No changes to commit on $local_branch"
+              else
+                  git commit -m "Sync README with main branch"
+                  git push origin "$local_branch"
+              fi
+          done
