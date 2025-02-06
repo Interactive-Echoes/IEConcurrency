@@ -6,13 +6,14 @@
 
 /* -------------------------- SPSCQueueBenchmark -------------------------- */
 
-// Set the size of elements to be used in the benchmarks. 
+// Set the size and type of elements to be used in the benchmarks. 
 static constexpr size_t ELEMENT_TEST_SIZE = 1 << 20;
+using ElementTestType = float;
 
 // Set the following macros to 0/1 to enable/disable the corresponding benchmark tests:
 // MEMORY_OPERATIONS_BENCHMARK: Measures memory allocation and deallocation performance.
 // INTER_THREAD_LATENCY_BENCHMARK: Measures latency between producer and consumer threads.
-#define MEMORY_OPERATIONS_BENCHMARK 0
+#define MEMORY_OPERATIONS_BENCHMARK 1
 #define INTER_THREAD_LATENCY_BENCHMARK 1
 
 /*
@@ -24,10 +25,10 @@ static constexpr size_t ELEMENT_TEST_SIZE = 1 << 20;
 */
 #if MEMORY_OPERATIONS_BENCHMARK
 #define ARGS_B1 Arg(ELEMENT_TEST_SIZE)->Unit(benchmark::kMicrosecond)->UseManualTime()
-BENCHMARK_TEMPLATE(BM_IESPSCQueue_Push,     float)->ARGS_B1;
-BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Push,  float)->ARGS_B1;
-BENCHMARK_TEMPLATE(BM_IESPSCQueue_Pop,      float)->ARGS_B1;
-BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Pop,   float)->ARGS_B1;
+BENCHMARK_TEMPLATE(BM_IESPSCQueue_Push,     ElementTestType)->ARGS_B1;
+BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Push,  ElementTestType)->ARGS_B1;
+BENCHMARK_TEMPLATE(BM_IESPSCQueue_Pop,      ElementTestType)->ARGS_B1;
+BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Pop,   ElementTestType)->ARGS_B1;
 #endif
 
 /*
@@ -43,8 +44,8 @@ BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Pop,   float)->ARGS_B1;
 */
 #if INTER_THREAD_LATENCY_BENCHMARK
 #define ARGS_B2 Arg(ELEMENT_TEST_SIZE)->Unit(benchmark::kMicrosecond)->UseManualTime()
-BENCHMARK_TEMPLATE(BM_IESPSCQueue_Latency,      float)->ARGS_B2;
-BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Latency,   float)->ARGS_B2;
+BENCHMARK_TEMPLATE(BM_IESPSCQueue_Latency,      ElementTestType)->ARGS_B2;
+BENCHMARK_TEMPLATE(BM_BoostSPSCQueue_Latency,   ElementTestType)->ARGS_B2;
 #endif
 
 BENCHMARK_MAIN();
