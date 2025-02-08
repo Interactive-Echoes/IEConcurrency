@@ -7,7 +7,7 @@
 </div>
 
 # IEConcurrency
-IE's high-performance concurrency library providing modern concurrent data structures and other syncronization primitives.
+IE's high-performance concurrency library providing modern concurrent data structures and other synchronization primitives.
 
 > [!IMPORTANT] 
 > For installation and integration instructions, please refer to the Wiki here: [IEConcurrency Wiki](https://github.com/Interactive-Echoes/IEConcurrency/wiki)
