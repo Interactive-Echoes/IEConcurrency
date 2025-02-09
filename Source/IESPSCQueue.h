@@ -37,8 +37,8 @@ public:
             return false;
         }
 
-        std::allocator_traits<Allocator>::construct(*this, m_Data + m_BackIndex + m_PaddingElementsNum, std::forward<Args>(_Args)...);
-        m_BackIndex = m_BackIndex == m_Capacity ? 0 : m_BackIndex + 1;
+        std::allocator_traits<Allocator>::construct(*this, m_Data + m_WriteIndex + m_PaddingElementsNum, std::forward<Args>(_Args)...);
+        m_WriteIndex = IE_UNLIKELY(m_WriteIndex == m_Capacity) ? 0 : m_WriteIndex + 1;
         m_Num.fetch_add(1, std::memory_order_release);
         return true;
     }
@@ -50,8 +50,8 @@ public:
             return false;
         }
 
-        Element = std::move(m_Data[m_FrontIndex + m_PaddingElementsNum]);
-        m_FrontIndex = m_FrontIndex == m_Capacity ? 0 : m_FrontIndex + 1;
+        Element = std::move(m_Data[m_ReadIndex + m_PaddingElementsNum]);
+        m_ReadIndex = IE_UNLIKELY(m_ReadIndex == m_Capacity) ? 0 : m_ReadIndex + 1;
         m_Num.fetch_sub(1, std::memory_order_release);
         return true;
     }
@@ -76,7 +76,7 @@ private:
     const size_t m_Capacity;
     const typename std::allocator_traits<Allocator>::pointer m_Data;
 
-    alignas(IE_CACHE_LINE_SIZE) size_t m_FrontIndex = 0;
-    alignas(IE_CACHE_LINE_SIZE) size_t m_BackIndex = 0;
+    alignas(IE_CACHE_LINE_SIZE) size_t m_WriteIndex = 0;
+    alignas(IE_CACHE_LINE_SIZE) size_t m_ReadIndex = 0;
     alignas(IE_CACHE_LINE_SIZE) std::atomic<size_t> m_Num{ 0 };
 };
