@@ -51,14 +51,14 @@ private:
 public:
     struct LockedValue
     {
-        const ScopedLock ScopedLock;
+        const IESpinOnWriteObject::ScopedLock ScopedLock;
         const T& Value;
     };
 
 public:
     const LockedValue LockForRead()
     {
-        return LockedValue{ ScopedLock(*this), *m_Object.exchange(nullptr) };
+        return LockedValue{ IESpinOnWriteObject::ScopedLock(*this), *m_Object.exchange(nullptr) };
     }
 
     void Write(const T& NewObject)
