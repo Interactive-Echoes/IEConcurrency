@@ -21,9 +21,20 @@ message("System name: ${CMAKE_SYSTEM_NAME}")
 message("System version: ${CMAKE_SYSTEM_VERSION}")
 message("System processor: ${CMAKE_SYSTEM_PROCESSOR}")
 
+message("Gathering source files and creating Library")
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(IEConcurrency INTERFACE)
 target_include_directories(IEConcurrency INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+message("Setting up install")
+install(TARGETS ${PROJECT_NAME}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+include(InstallRequiredSystemLibraries)
+
+message("Adding extra directories")
 add_subdirectory(Examples)
 
 message("------------------------------------------------------------\n")
