@@ -21,16 +21,30 @@ message("System name: ${CMAKE_SYSTEM_NAME}")
 message("System version: ${CMAKE_SYSTEM_VERSION}")
 message("System processor: ${CMAKE_SYSTEM_PROCESSOR}")
 
+message("Gathering source files and creating Library")
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(IEConcurrency INTERFACE)
 target_include_directories(IEConcurrency INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+message("Including Third Party Libraries")
 set(BENCHMARK_DOWNLOAD_DEPENDENCIES ON)
 set(BENCHMARK_ENABLE_TESTING OFF)
 add_subdirectory(ThirdParty/Benchmark)
 set(BOOST_INCLUDE_LIBRARIES lockfree)
 add_subdirectory(ThirdParty/Boost)
+
+message("Adding benchmark tests")
 add_subdirectory(BenchmarkTests)
 
+message("Setting up install")
+install(TARGETS ${PROJECT_NAME}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+include(InstallRequiredSystemLibraries)
+
+message("Adding extra directories")
 add_subdirectory(Examples)
 
 message("------------------------------------------------------------\n")
