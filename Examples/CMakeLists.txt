@@ -8,7 +8,9 @@ project(IEConcurrencyExamples VERSION 1.0.0 LANGUAGES CXX)
 message("\n------------------------------------------------------------")
 message("${PROJECT_NAME}\n")
 
-file(GLOB Example_SOURCE_FILES "./*.cpp")
+set(Example_SOURCE_FILES 
+  "./IEConcurrencyDemo.cpp"
+)
 foreach(SOURCE_FILE ${Example_SOURCE_FILES})
   get_filename_component(file_name ${SOURCE_FILE} NAME_WE)
   message(STATUS "Setting up executable for ${file_name}")

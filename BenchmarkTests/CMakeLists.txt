@@ -8,7 +8,9 @@ project(IEConcurrencyBenchmarkTests VERSION 1.0.0 LANGUAGES CXX)
 message("\n------------------------------------------------------------")
 message("${PROJECT_NAME}\n")
 
-file(GLOB Benchmark_SOURCE_FILES "./*.cpp")
+set(Benchmark_SOURCE_FILES 
+  "./SPSCQueueBenchmark.cpp"
+)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 foreach(SOURCE_FILE ${Benchmark_SOURCE_FILES})
   get_filename_component(file_name ${SOURCE_FILE} NAME_WE)
