@@ -25,6 +25,7 @@ message("Gathering source files and creating Library")
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(IEConcurrency INTERFACE)
 target_include_directories(IEConcurrency INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_options(IEConcurrency INTERFACE "-Wno-interference-size")
 
 message("Setting up install")
 install(TARGETS ${PROJECT_NAME}
