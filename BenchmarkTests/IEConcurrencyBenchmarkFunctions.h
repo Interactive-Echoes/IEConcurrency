@@ -9,7 +9,6 @@
 
 #include "benchmark/benchmark.h"
 #include "boost/lockfree/spsc_queue.hpp"
-#include "boost/lockfree/stack.hpp"
 
 #include "IEConcurrency.h"
 
