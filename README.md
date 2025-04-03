@@ -25,7 +25,7 @@ A lock-free single-producer multi-consumer (SPMC) FIFO Queue concurrent data str
 This repository is organized across two main branches:
 
 ### Master Branch
-The benchmark branch contains the performance benchmarking infrastructure using Google Benchmark framework. Use this branch when:
+The master branch contains the performance benchmarking infrastructure using Google Benchmark framework. Use this branch when:
 - Comparing IEConcurrency performance against other libraries
 - Running performance tests
 - Contributing new benchmarks
@@ -36,7 +36,7 @@ The benchmark branch contains the performance benchmarking infrastructure using 
 > For more information on how to benchmark and contribute, visit the [Benchmarking and Development Wiki](https://github.com/Interactive-Echoes/IEConcurrency/wiki/Benchmarking-and-Development).
 
 ### Release Branch
-The master branch contains the core library implementation, designed to be easily integrated into your applications. This is the branch you should use when adding IEConcurrency as a dependency to your project or looking for the latest stable release.
+The release branch contains the core library implementation, designed to be easily integrated into your applications. This is the branch you should use when adding IEConcurrency as a dependency to your project or looking for the latest stable release.
 
 ## Third-Party Libraries for Benchmarking Performance
 - [Google-Benchmark](https://github.com/google/benchmark)
