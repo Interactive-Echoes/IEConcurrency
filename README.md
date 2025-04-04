@@ -32,7 +32,7 @@ The master branch contains the performance benchmarking infrastructure using Goo
 - Analyzing or reporting performance metrics
 - Contributing new features or modifications
 > [!NOTE]
-> The benchmark branch serves as both the development and benchmarking branch.  
+> The master branch serves as both the development and benchmarking branch.  
 > For more information on how to benchmark and contribute, visit the [Benchmarking and Development Wiki](https://github.com/Interactive-Echoes/IEConcurrency/wiki/Benchmarking-and-Development).
 
 ### Release Branch
