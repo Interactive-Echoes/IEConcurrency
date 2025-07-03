@@ -1,41 +1,50 @@
-name: Reconcile Benchmark Source Files
+name: Reconcile Master Source Files
 
 on:
   workflow_dispatch:
 
 jobs:
-  pull-benchmark-source:
+  reconcile-source:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Important to fetch all branches and history
 
       - name: Set up Git user
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
-      - name: Pull Benchmark Source
-        run: |
-          git fetch --all
+      - name: Fetch all branches
+        run: git fetch --all
 
-          git checkout benchmark
-          git pull origin benchmark
-          
+      - name: Checkout and pull master
+        run: |
           git checkout master
           git pull origin master
-          
+
+      - name: Checkout and pull release
+        run: |
+          git checkout release
+          git pull origin release
+
+      - name: Remove and restore Source/ and Examples/
+        run: |
           git rm -r --ignore-unmatch --cached Source/ Examples/ || true
-          rm -r Source/ Examples/ || true
-          
-          git restore --source=benchmark --staged --worktree Source/ Examples/
-          git add --renormalize Source/* Examples/*
-          
+          rm -rf Source/ Examples/ || true
+          git restore --source=master --staged --worktree Source/ Examples/
+          git add --renormalize Source/ Examples/
+
+      - name: Commit and push changes if any
+        run: |
           if git diff --cached --quiet; then
-              echo "No changes to commit on master"
+            echo "No changes to commit on release"
           else
-              git commit -m "Reconcile Source with benchmark branch"
-              git push origin master
+            git commit -m "Reconcile Source and Examples from master"
+            git push origin release
           fi
