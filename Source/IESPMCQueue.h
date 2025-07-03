@@ -21,7 +21,7 @@ public:
     {
         if constexpr (!std::is_trivially_destructible_v<T>)
         {
-            for (std::size_t i = 0; i < m_Capacity - m_PaddingElementsNum; i++)
+            for (std::size_t i = 0; i < m_Num.load(std::memory_order_relaxed); i++)
             {
                 std::allocator_traits<Allocator>::destroy(*this, m_Data + m_PaddingElementsNum + i);
             }
@@ -76,6 +76,11 @@ public:
     bool IsEmpty() const
     {
         return m_Num.load(std::memory_order_acquire) == 0;
+    }
+
+    bool IsFull() const
+    {
+        return m_Num.load(std::memory_order_acquire) >= m_Capacity;
     }
 
 private:
