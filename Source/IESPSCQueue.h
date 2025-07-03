@@ -71,6 +71,11 @@ public:
         return m_Num.load(std::memory_order_acquire) == 0;
     }
 
+    bool IsFull() const
+    {
+        return m_Num.load(std::memory_order_acquire) >= m_Capacity;
+    }
+
 private:
     static constexpr size_t m_PaddingElementsNum = (IE_CACHE_LINE_SIZE - 1) / sizeof(T) + 1;
     const size_t m_Capacity;
